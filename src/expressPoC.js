@@ -32,6 +32,10 @@ function prepareResponse(res, buffer) {
     res.send(buffer);
 }
 
+router.route('/ping').get(async (req, res) => {
+    res.send('Pong!');
+});
+
 router.route('/HtmlToPdf').post(async (req, res) => {
     const html = req.body['html'];
     const pageContentSetter = async page => await page.setContent(html, {waitUntil: 'networkidle2'});
