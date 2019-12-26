@@ -2,7 +2,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Debug Express PoC",
+            "name": "Debug Generator",
             "type": "node",
             "request": "launch",
             "skipFiles": [
@@ -10,7 +10,7 @@
             ],
             "runtimeExecutable": "yarn",
             "runtimeArgs": [
-                "debug-express-poc"
+                "debug-generator"
             ],
             "console": "integratedTerminal",
             "port": 5858
