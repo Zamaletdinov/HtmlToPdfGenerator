@@ -41,7 +41,7 @@ router.route('/HtmlToPdf').post(async (req, res) => {
 
 router.route('/UrlToPdf').post(async (req, res) => {
     const url = req.query['url'];
-    const pageContentSetter = async page => await page.goto(url, {waitUntil: 'networkidle2'});;
+    const pageContentSetter = async page => await page.goto(url, {waitUntil: 'networkidle2'});
     const buffer = await convertToPdf(pageContentSetter);
     prepareResponse(res, buffer);
 });
