@@ -6,14 +6,12 @@ const bodyParser = require('body-parser');
 const app = express();
 const router = express.Router();
 
-router.route('/HtmlToPdf').post(async (req, res) => {
+async function convertToPdf(pageContentSetter) {
     const browser = await puppeteer.launch({ headless: true });
     const page = await browser.newPage();
 
-    const html = req.body['html'];
-
     await page.setViewport({width: 1200, height: 900});
-    await page.setContent(html, {waitUntil: 'networkidle2'});
+    await pageContentSetter(page);
 
     const buffer = await page.pdf({
         format: "A4",
@@ -24,33 +22,28 @@ router.route('/HtmlToPdf').post(async (req, res) => {
         }
     });
 
+    await browser.close();
+
+    return buffer;
+}
+
+function prepareResponse(res, buffer) {
     res.type('application/pdf');
     res.send(buffer);
+}
 
-    await browser.close();
+router.route('/HtmlToPdf').post(async (req, res) => {
+    const html = req.body['html'];
+    const pageContentSetter = async page => await page.setContent(html, {waitUntil: 'networkidle2'});
+    const buffer = await convertToPdf(pageContentSetter);
+    prepareResponse(res, buffer);
 });
 
 router.route('/UrlToPdf').post(async (req, res) => {
-    const browser = await puppeteer.launch({ headless: true });
-    const page = await browser.newPage();
-
     const url = req.query['url'];
-
-    await page.setViewport({width: 1200, height: 900});
-    await page.goto(url, {waitUntil: 'networkidle2'});
-    const buffer = await page.pdf({
-        format: "A4",
-        printBackground: true,
-        margin: {
-            top: 20,
-            bottom: 20
-        }
-    });
-
-    res.type('application/pdf');
-    res.send(buffer);
-
-    await browser.close();
+    const pageContentSetter = async page => await page.goto(url, {waitUntil: 'networkidle2'});;
+    const buffer = await convertToPdf(pageContentSetter);
+    prepareResponse(res, buffer);
 });
 
 app.use(bodyParser.json({
@@ -59,6 +52,6 @@ app.use(bodyParser.json({
 
 app.use('/api', router);
 
-const port = 3000;
+const port = process.env.PORT || 3000;
 http.createServer(app).listen(port);
 console.log('Server listening on port ' + port);

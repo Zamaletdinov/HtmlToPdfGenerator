@@ -1,0 +1,19 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug Express PoC",
+            "type": "node",
+            "request": "launch",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "runtimeExecutable": "yarn",
+            "runtimeArgs": [
+                "debug-express-poc"
+            ],
+            "console": "integratedTerminal",
+            "port": 5858
+        }
+    ]
+}

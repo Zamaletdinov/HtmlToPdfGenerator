@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "debug-express-poc": "PORT=7463 node --nolazy --inspect-brk=5858 src/expressPoC.js"
+  },
+  "dependencies": {
+    "body-parser": "1.19.0",
+    "express": "4.17.1",
+    "puppeteer": "2.0.0"
+  }
+}
