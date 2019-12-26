@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "debug-generator": "PORT=7463 node --nolazy --inspect-brk=5858 src/index.js"
+    "debug-generator": "PORT=7463 node --nolazy --inspect-brk=5858 src/app.js"
   },
   "dependencies": {
     "body-parser": "1.19.0",

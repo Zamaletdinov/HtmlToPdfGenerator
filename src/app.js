@@ -1,15 +1,7 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const apiRouter = require('./routes/apiRouter');
-const pingRouter = require('./routes/pingRouter');
+const app = require('./server');
+const http = require('http');
 
-const app = express();
+const port = process.env.PORT || 3000;
 
-app.use(bodyParser.json({
-    limit: '10mb'
-}));
-
-app.use('/api', apiRouter);
-app.use('/ping', pingRouter);
-
-module.exports = app;
+http.createServer(app).listen(port);
+console.log(`Server listening on port ${port}`);
