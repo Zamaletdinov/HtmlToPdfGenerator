@@ -12,4 +12,10 @@ server.use(bodyParser.json({
 server.use('/api', apiRouter);
 server.use('/ping', pingRouter);
 
+server.use((err, req, res, next) => {
+    console.error(err);
+    res.status(500);
+    res.send(JSON.stringify(err));
+});
+
 module.exports = server;

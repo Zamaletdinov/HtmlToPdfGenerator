@@ -1,4 +1,5 @@
 {
+  "license": "UNLICENSED",
   "scripts": {
     "debug-generator": "PORT=7463 node --nolazy --inspect-brk=5858 src/app.js"
   },
